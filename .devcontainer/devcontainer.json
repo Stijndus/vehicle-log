@@ -1,0 +1,35 @@
+{
+  "name": "VehicleLog",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "runServices": [
+    "app",
+    "mysql"
+  ],
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [8000, 8100, 3306],
+  "postCreateCommand": "bash -lc 'cd /workspace/backend && composer install --prefer-source --no-cache --no-interaction && if [ ! -f .env ]; then cp .env.example .env; fi && php artisan key:generate --force && cd /workspace/frontend && npm install'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "xdebug.php-debug",
+        "angular.ng-template",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "editor.formatOnSave": true,
+        "files.exclude": {
+          "**/backend/vendor": true,
+          "**/frontend/node_modules": true
+        }
+      }
+    }
+  }
+}
