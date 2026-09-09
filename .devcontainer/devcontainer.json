@@ -1,17 +1,12 @@
 {
   "name": "VehicleLog",
-  "dockerComposeFile": [
-    "../docker-compose.yml"
-  ],
+  "dockerComposeFile": ["../docker-compose.yml"],
   "service": "app",
   "workspaceFolder": "/workspace",
-  "runServices": [
-    "app",
-    "mysql"
-  ],
+  "runServices": ["app", "mysql"],
   "shutdownAction": "stopCompose",
   "forwardPorts": [8000, 8100, 3306],
-  "postCreateCommand": "bash -lc 'cd /workspace/backend && composer install --prefer-source --no-cache --no-interaction && if [ ! -f .env ]; then cp .env.example .env; fi && php artisan key:generate --force && cd /workspace/frontend && npm install'",
+  "postCreateCommand": "cd /workspace/backend && composer install --prefer-dist --no-interaction && if [ ! -f .env ]; then cp .env.example .env; fi && php artisan key:generate --force && cd /workspace/frontend && sudo chown -R vscode:vscode /workspace/frontend/node_modules && sudo chown -R vscode:vscode /home/vscode/.npm && npm ci",
   "customizations": {
     "vscode": {
       "extensions": [

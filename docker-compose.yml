@@ -3,41 +3,63 @@ services:
     build:
       context: .
       dockerfile: .devcontainer/Dockerfile
+
     working_dir: /workspace
+
     command: sleep infinity
+
     volumes:
       - .:/workspace:cached
       - composer-cache:/tmp/composer-cache
       - npm-cache:/home/vscode/.npm
+      - frontend-node-modules:/workspace/frontend/node_modules
+
     environment:
       COMPOSER_CACHE_DIR: /tmp/composer-cache
+
     ports:
       - "8000:8000"
       - "8100:8100"
+
     depends_on:
       mysql:
         condition: service_healthy
 
   mysql:
     image: mysql:8.4
+
     restart: unless-stopped
+
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-vehicle_log}
       MYSQL_USER: ${MYSQL_USER:-vehicle_log}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-vehicle_log}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+
     ports:
       - "3306:3306"
+
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${MYSQL_ROOT_PASSWORD:-root}"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "127.0.0.1",
+          "-uroot",
+          "-p${MYSQL_ROOT_PASSWORD:-root}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 20s
+
     volumes:
       - mysql-data:/var/lib/mysql
 
 volumes:
   composer-cache:
   npm-cache:
+  frontend-node-modules:
   mysql-data:
