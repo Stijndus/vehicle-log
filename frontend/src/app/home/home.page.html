@@ -1,0 +1,42 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>VehicleLog</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="home-page">
+  <div class="home-page__shell">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Development foundation</ion-card-subtitle>
+        <ion-card-title>Monorepo setup check</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>
+          VehicleLog is ready for feature-by-feature development with Ionic, Angular, Laravel, and
+          MySQL running through Docker.
+        </p>
+
+        @if (loading()) {
+          <div class="home-page__state">
+            <ion-spinner name="crescent" />
+            <span>Checking the backend health endpoint…</span>
+          </div>
+        } @else if (health(); as health) {
+          <div class="home-page__state">
+            <ion-badge [color]="statusVariant()">API {{ health.status }}</ion-badge>
+            <span>Frontend → Laravel API connectivity is working.</span>
+          </div>
+        } @else {
+          <div class="home-page__state home-page__state--error">
+            <ion-badge color="danger">API unavailable</ion-badge>
+            <span>{{ error() }}</span>
+          </div>
+        }
+
+        <ion-button expand="block" fill="outline" (click)="loadHealth()">Retry health check</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

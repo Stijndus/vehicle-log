@@ -1,0 +1,69 @@
+:host {
+  display: contents;
+}
+
+.home-page {
+  --background: linear-gradient(180deg, #0f172a 0%, #111827 45%, #020617 100%);
+  color: #e2e8f0;
+}
+
+.home-page__shell {
+  min-height: 100%;
+  display: grid;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+ion-card {
+  margin: 0;
+  border-radius: 1rem;
+  background: rgba(15, 23, 42, 0.92);
+  color: inherit;
+  box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, 0.35);
+}
+
+ion-card-subtitle {
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+ion-card-title,
+ion-badge,
+p,
+span,
+ion-button {
+  color: inherit;
+}
+
+ion-card-content {
+  display: grid;
+  gap: 1rem;
+}
+
+p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.home-page__state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.home-page__state--error {
+  color: #fecaca;
+}
+
+ion-spinner {
+  color: var(--ion-color-primary);
+}
+
+@media (min-width: 768px) {
+  .home-page__shell {
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+}
